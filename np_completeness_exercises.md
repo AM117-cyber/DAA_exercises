@@ -20,6 +20,11 @@ NP- HARD:
 
 número cromático es 3 <= set cover(exact cover):
 
+Dado un grafo G = (V,E) vamos a crear un conjunto X tal que por cada nodo $v \in V$ se añade a X: v, Rv,Gv y Bv. Por cada arista $<u,v> \in E$ se añade a X: Ruv, Guv y Buv.
+Luego vamos a construir S tal que por cada nodo $v \in V$ se añaden Svr, Svg y Svb a S tal que $v \in Svg, Svr, Svb$ y por cada arista <v,u> en E, $Rvu \in Svr$, $Gvu \in Svg$ y $Bvu \in Svb$. Luego por cada arista $<v,u> \in E$ añadimos a S conjuntos unitarios con los elementos Rvu, Gvu y Bvu. Por la forma en que construimos X y S, si existe un exact cover entonces el grafo es 3 coloreable porque para que v esté en S' es necesario escoger Svg, Svr o Svb, lo cual representa asociarle ese color a v porque para añadir a S' algún nodo u que tenga una arista en común con v, hay que añadir Sug, Sur o Sub. 
+
+NP:
+Dado un conjunto S' se puede pasar por cada uno de sus elementos marcando los elementos de X que se han encontrado para garantizar que se pasa por todos una única vez en tiempo polinomial.
 
 ## Clique máximo
 > Un clique es un subgrafo completo dentro de un grafo. Formalmente, un clique en un grafo $G=(V,E)$ es un subconjunto de vértices $C \subseteq V$, tal que todos los pares de vértices en $C$ están conectados directamente por una arista. En otras palabras, todos los vértices del clique están mutuamente conectados.
