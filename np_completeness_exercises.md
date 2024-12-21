@@ -121,13 +121,9 @@ Existe una reducción polinómica g de 3-COLORABILIDAD a DNP (Problema del Núme
 Demostración:
 Dado un grafo G, construimos un nuevo grafo H = g(G) de la siguiente manera:
 
-$$
-\begin{aligned}
-V(H)= & V(G) \cup\left\{u_{i, j} \mid\left\{v_{i}, v_{j}\right\} \in E(G)\right\} ; \\
-E(H)= & \left\{\left\{v_{i}, u_{i,j}\right\} \mid\left\{v_{i}, v_{j}\right\} \in E(G)\right\} \cup\left\{\left\{v_{j}, u_{i,j}\right\} \mid\left\{v_{i}, v_{j}\right\} \in E(G)\right\} \\
-& \left.\cup\left\{\left\{v_{i}, v_{j}\right\} \mid 1 \leq i, j \leq n \text { and } i \neq j\right\}\right\} .
-\end{aligned}
-$$
+V(H) = V(G) ∪ {ui,j | {vi, vj} ∈ E(G)} ;
+
+E(H) = { {vi, ui,j} | {vi, vj} ∈ E(G)} ∪ { {vj, ui,j} | {vi, vj} ∈ E(G)} ∪ { {vi, vj} | 1 ≤ i, j ≤ n y i ≠ j } } 
 
 Por construcción, dado que min-deg(H) = 2 y H no tiene vértices aislados, la desigualdad δ(H) ≤ min-deg(H)+1 implica que 2 ≤ δ(H) ≤ 3.
 
