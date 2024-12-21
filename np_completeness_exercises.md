@@ -16,6 +16,11 @@ Demuestre que los siguientes problemas son NP-Hard o NP-Completos, según corres
 ## Set cover
 > Dado un conjunto $X$ y una colección S de subconjuntos de $X$, el problema consiste en determinar si existe un subcolector $S' \subseteq S$ tal que cada elemento de $X$ aparezca exactamente una vez en los subconjuntos de $S'$.
 
+NP- HARD:
+
+número cromático es 3 <= set cover(exact cover):
+
+
 ## Clique máximo
 > Un clique es un subgrafo completo dentro de un grafo. Formalmente, un clique en un grafo $G=(V,E)$ es un subconjunto de vértices $C \subseteq V$, tal que todos los pares de vértices en $C$ están conectados directamente por una arista. En otras palabras, todos los vértices del clique están mutuamente conectados.
 
@@ -29,12 +34,13 @@ Por qué no puedo decir que es NP?
 Por ser un problema de optimización.
 
 ## Cobertura de Clique
-> Dado un grafo $G=(V,E)$, una cobertura de cliques es un conjunto de cliques ${C_1,C_2,…,C_k}$ tal que cada arista $(u,v) \in E$ pertenece a al menos uno de estos cliques.
+> Dado un grafo $G=(V,E)$, una cobertura de cliques es un conjunto de cliques ${C_1,C_2,…,C_k}$ tal que cada vértice $v \in V$ pertenece a al menos uno de estos cliques.
 
-El objetivo del problema de cobertura de cliques es encontrar el número mínimo de cliques necesarios para cubrir todas las aristas del grafo.
+El objetivo del problema de cobertura de cliques es encontrar el número mínimo de cliques necesarios para cubrir todos los vértices del grafo.
 
 NP- Hard:
-
+número cromático <= cobertura de cliques
+Sea G = (V,E) y G' su grafo complemento y sea k el número cromático de G; el número mínimo de cliques necesarios para cubrir todos los vértices del grafo G' que es k. En una k-coloración de de G los vértices de un mismo color no tienen ninguna arista entre sí, por lo que en G' formarán un clique. Luego en G' hay k cliques ${C_1,C_2,…,C_k}$ que cumplen que cada vértice $v' \in V'$ pertenece a al menos uno de estos cliques. Si en G' existiera un clique cover de tamaño h menor que k, cada uno de estos cliques formaría un conjunto independiente en G, por lo que coloreando del mismo color los vértices que pertenecen al mismo conjunto independiente se llega a una coloración válida con h colores, por lo que el número cromático de G no sería k, contradicción. Por lo tanto, el menor clique cover de G' es de tamaño k. 
 
 ## Numero Cromático
 > El número cromático de un grafo es el número mínimo de colores necesarios para colorear los vértices del grafo de manera que dos vértices adyacentes no compartan el mismo color.
@@ -105,6 +111,21 @@ Dado un grafo $G=(V,E)$, un conjunto de retroalimentación de arcos es un subcon
 
 El objetivo del problema es encontrar el conjunto de retroalimentación de arcos de tamaño mínimo.
 
+NP-Hard:
+vertex cover <= retroalimentación de arcos
+
+La entrada del problema de Cobertura de Vértices es un grafo no dirigido \( G = (V, E) \). Dado \( G = (V, E) \), creamos un grafo dirigido \( G' = (V', E') \) tal que por cada vértice v que pertenece a V, v y v' pertenecen a V' y E'= {(𝑣,𝑣′),(𝑣′,𝑢),(𝑢′,𝑣)∣⟨𝑢,𝑣⟩∈𝐸}. 
+
+## Correctitud
+Existe una cobertura de vértices en \( G \) de tamaño \( k \) si y solo si existe un conjunto de retroalimentación de arcos en \( G' \) de tamaño \( k \).
+
+### Demostración
+(⇐)Sea \( S' \) un conjunto de retroalimentación de arcos de \( G' \) de tamaño \( k \). Si existe 𝑒∈𝑆' tal que \( e \) no es una arista \( (v', v) \), entonces \( e \) es una arista de la forma \( (v', u) \). Si \( e \) es una arista \( (v', u) \), como 𝑒∈𝑆', abarca todos los ciclos \( [v', u, ..., v'] \). Todos los caminos de u a v' pasan por \( v \), ya que el único arco incidente en \( v' \) es \( v \). Por tanto, si sustituimos \( (v', u) \) por \( (v, v') \), se abarcan los mismos ciclos de \( G' \). Por tanto, es posible crear un nuevo conjunto \( S' \) de tamaño \( k \) formado solamente por arcos de la forma \( (v, v') \). Dado el nuevo conjunto \( S' \), como \( S' \) abarca todos los ciclos, también abarca los ciclos \( c \) de la forma \( c = [v, v', u, u', v] \) en \( G' \). A cada ciclo \( c \) en \( G' \) se le asocia una arista ⟨𝑢,𝑣⟩∈𝐸 y viceversa. Como por cada ciclo \( c \) se cumple que (𝑣,𝑣′)∈𝑆′ y (𝑢,𝑢′)∈𝑆', entonces es posible crear un conjunto \( S \) formado por los vértices de \( V \) correspondientes a las aristas de \( S' \), el cual abarca todas las aristas de \( G \). Por tanto, \( S \) es una cobertura de vértices de \( G \).
+
+
+(⇒) Sea \( S \) una cobertura de vértices de \( G \), entonces para todo ⟨𝑢,𝑣⟩∈𝐸 se cumple que u∈𝑆 o v∈𝑆. Sea \( S' \) un conjunto de arcos formado por los arcos \( (v', v) \) correspondientes a los vértices \( v \) que pertenecen a \( S \). Demostremos que \( G' - S' \) no tiene ciclos. Dado un ciclo \( c \) de \( G' \); si v'∈ c, entonces <v,v'> ∈c, ya que en \( v' \) solo incide \( v \); si v∈c, entonces <v,v'>∈c, ya que \( v \) solo incide en \( v' \). Por tanto, en cada ciclo de \( G' \) existe un arco de la forma \( (v, v') \), por lo que \( S' \) es una retroalimentación de vértices de \( G' \).
+
+Luego para saber si existe un vertex cover de tamaño k en G, realizo la transformación y si el conjunto de retroalimentación de arcos de tamaño mínimo de G' es de tamaño h > k retorno False, porque de existir un vertex cover de tamaño k en G también habría un conjunto de retroalimentación de arcos de tamaño k en G', lo cual no pasa porque h es el mínimo. En otro caso retorno True.
 
 
 ## 3D Matching
