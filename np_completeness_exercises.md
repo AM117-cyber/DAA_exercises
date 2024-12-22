@@ -21,7 +21,7 @@ NP- HARD:
 número cromático es 3 <= set cover(exact cover):
 
 Dado un grafo G = (V,E) vamos a crear un conjunto X tal que por cada nodo $v \in V$ se añade a X: v, Rv,Gv y Bv. Por cada arista $<u,v> \in E$ se añade a X: Ruv, Guv y Buv.
-Luego vamos a construir S tal que por cada nodo $v \in V$ se añaden Svr, Svg y Svb a S tal que $v \in Svg, Svr, Svb$ y por cada arista <v,u> en E, $Rvu \in Svr$, $Gvu \in Svg$ y $Bvu \in Svb$. Luego por cada arista $<v,u> \in E$ añadimos a S conjuntos unitarios con los elementos Rvu, Gvu y Bvu. Por la forma en que construimos X y S, si existe un exact cover entonces el grafo es 3 coloreable porque para que v esté en S' es necesario escoger Svg, Svr o Svb, lo cual representa asociarle ese color a v porque para añadir a S' algún nodo u que tenga una arista en común con v, hay que añadir Sug, Sur o Sub. 
+Luego vamos a construir S tal que por cada nodo $v \in V$ se añaden Svr, Svg y Svb a S tal que $v \in Svg, Svr, Svb$ y por cada arista <v,u> en E, $Rvu \in Svr$, $Gvu \in Svg$ y $Bvu \in Svb$. Luego por cada arista $<v,u> \in E$ añadimos a S conjuntos unitarios con los elementos Rvu, Gvu y Bvu. Por la forma en que construimos X y S, si existe un exact cover entonces el grafo es 3 coloreable porque para que v esté en S' es necesario escoger Svg, Svr o Svb, lo cual representa asociarle ese color a v porque para añadir a S' algún nodo u que tenga una arista en común con v, hay que añadir Sug, Sur o Sub.
 Para ver que determinar si un grafo tiene como número cromático 3 es np-hard leer la demostración de número cromático.
 
 NP:
@@ -46,7 +46,7 @@ El objetivo del problema de cobertura de cliques es encontrar el número mínimo
 
 NP- Hard:
 número cromático <= cobertura de cliques
-Sea G = (V,E) y G' su grafo complemento y sea k el número cromático de G; el número mínimo de cliques necesarios para cubrir todos los vértices del grafo G' que es k. En una k-coloración de de G los vértices de un mismo color no tienen ninguna arista entre sí, por lo que en G' formarán un clique. Luego en G' hay k cliques ${C_1,C_2,…,C_k}$ que cumplen que cada vértice $v' \in V'$ pertenece a al menos uno de estos cliques. Si en G' existiera un clique cover de tamaño h menor que k, cada uno de estos cliques formaría un conjunto independiente en G, por lo que coloreando del mismo color los vértices que pertenecen al mismo conjunto independiente se llega a una coloración válida con h colores, por lo que el número cromático de G no sería k, contradicción. Por lo tanto, el menor clique cover de G' es de tamaño k. 
+Sea G = (V,E) y G' su grafo complemento y sea k el número cromático de G; el número mínimo de cliques necesarios para cubrir todos los vértices del grafo G' que es k. En una k-coloración de de G los vértices de un mismo color no tienen ninguna arista entre sí, por lo que en G' formarán un clique. Luego en G' hay k cliques ${C_1,C_2,…,C_k}$ que cumplen que cada vértice $v' \in V'$ pertenece a al menos uno de estos cliques. Si en G' existiera un clique cover de tamaño h menor que k, cada uno de estos cliques formaría un conjunto independiente en G, por lo que coloreando del mismo color los vértices que pertenecen al mismo conjunto independiente se llega a una coloración válida con h colores, por lo que el número cromático de G no sería k, contradicción. Por lo tanto, el menor clique cover de G' es de tamaño k.
 
 ## Numero Cromático
 > El número cromático de un grafo es el número mínimo de colores necesarios para colorear los vértices del grafo de manera que dos vértices adyacentes no compartan el mismo color.
@@ -113,17 +113,17 @@ NP - Completo:
 
 3-COLORABILIDAD ∝ NÚMERO DOMÁTICO
 
-Existe una reducción polinómica g de 3-COLORABILIDAD a DNP (Problema del Número Domático) con las siguientes propiedades:
+Se hará una reducción polinómica g de 3-COLORABILIDAD a DNP (Problema del Número Domático), conociendo que el problema 3-COLORABILIDAD es NP-completo demostrado anteriormente, con las siguientes propiedades, donde δ(G) es el número domático de G:
 
-- Si G ∈ 3-COLORABILIDAD → δ(g(G)) = 3
-- Si G ∉ 3-COLORABILIDAD → δ(g(G)) = 2
+- Si G ∈ 3-COLORABILIDAD → δ(G) = 3
+- Si G ∉ 3-COLORABILIDAD → δ(G) = 2
 
 Demostración:
 Dado un grafo G, construimos un nuevo grafo H = g(G) de la siguiente manera:
 
 V(H) = V(G) ∪ {ui,j | {vi, vj} ∈ E(G)} ;
 
-E(H) = { {vi, ui,j} | {vi, vj} ∈ E(G)} ∪ { {vj, ui,j} | {vi, vj} ∈ E(G)} ∪ { {vi, vj} | 1 ≤ i, j ≤ n y i ≠ j } } 
+E(H) = { {vi, ui,j} | {vi, vj} ∈ E(G)} ∪ { {vj, ui,j} | {vi, vj} ∈ E(G)} ∪ { {vi, vj} | 1 ≤ i, j ≤ n y i ≠ j } }
 
 Por construcción, dado que min-deg(H) = 2 y H no tiene vértices aislados, la desigualdad δ(H) ≤ min-deg(H)+1 implica que 2 ≤ δ(H) ≤ 3.
 
@@ -185,7 +185,7 @@ Luego, al obtener el tamaño del menor conjunto de retroalimentación de G'tenem
 NP-Hard:
 vertex cover <= retroalimentación de arcos
 
-La entrada del problema de Cobertura de Vértices es un grafo no dirigido \( G = (V, E) \). Dado \( G = (V, E) \), creamos un grafo dirigido \( G' = (V', E') \) tal que por cada vértice v que pertenece a V, v y v' pertenecen a V' y E'= {(𝑣,𝑣′),(𝑣′,𝑢),(𝑢′,𝑣)∣⟨𝑢,𝑣⟩∈𝐸}. 
+La entrada del problema de Cobertura de Vértices es un grafo no dirigido \( G = (V, E) \). Dado \( G = (V, E) \), creamos un grafo dirigido \( G' = (V', E') \) tal que por cada vértice v que pertenece a V, v y v' pertenecen a V' y E'= {(𝑣,𝑣′),(𝑣′,𝑢),(𝑢′,𝑣)∣⟨𝑢,𝑣⟩∈𝐸}.
 
 ## Correctitud
 Existe una cobertura de vértices en \( G \) de tamaño \( k \) si y solo si existe un conjunto de retroalimentación de arcos en \( G' \) de tamaño \( k \).
