@@ -29,6 +29,8 @@ La construcción del conjunto X y la colección S se basa en añadir, para cada 
 NP:
 Dado un conjunto S' se puede pasar por cada uno de sus elementos marcando los elementos de X que se han encontrado para garantizar que se pasa por todos una única vez en tiempo polinomial.
 
+Es NP - Completo
+
 ## Clique máximo
 > Un clique es un subgrafo completo dentro de un grafo. Formalmente, un clique en un grafo $G=(V,E)$ es un subconjunto de vértices $C \subseteq V$, tal que todos los pares de vértices en $C$ están conectados directamente por una arista. En otras palabras, todos los vértices del clique están mutuamente conectados.
 
