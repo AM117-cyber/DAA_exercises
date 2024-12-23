@@ -87,20 +87,23 @@ Sea:
 - k = tamaño del min vertex cover en G
 - h = número dominante de G' (tamaño del min conjunto dominante)
 
-Demostración k = h:
+Demostración k ≥ h:
 
 Sup k < h:
 Tenemos un vertex cover C = {v₁,...,vₖ} en G. Este conjunto C también es un conjunto dominante en G' porque:
 - Cada vértice original v ∈ V-C es adyacente a algún vértice en C (por ser vertex cover)
 - Cada vértice nuevo uv es adyacente a u o v, y al menos uno está en C
 Por lo tanto, existe un conjunto dominante de tamaño k < h en G', contradicción con h ser el mínimo.
+Luego k ≥ h
 
-k ≤ h:
+Sup k > h:
+
 Si D es un conjunto dominante mínimo en G' de tamaño h, entonces los vértices de D correspondientes a vértices originales forman un vertex cover en G de tamaño ≤ h. Si hubiera una arista {u,v} en G no cubierta, su vértice uv en G' no estaría dominado, contradiciendo que D es dominante.
+Luego existe un vertex cover de tamaño menor que k que es el mínimo, contradicción. Por lo tanto k ≤ h.
 
 Como k ≥ h y k ≤ h, entonces k = h.
 
-Por lo tanto, para resolver si G tiene un vertex cover de tamaño ≤ t, basta calcular el número dominante de G'. Si es ≤ t responder True, caso contrario False.
+Por lo tanto, para hallar el menor vertex cover de G, basta calcular el número dominante de G'.
 
 La reducción es polinomial y preserva la solución, demostrando que Número Dominante es NP-hard.
 
@@ -109,11 +112,11 @@ La reducción es polinomial y preserva la solución, demostrando que Número Dom
 
 ## Hallar el número de Domatic de un grafo.
 
-NP - Completo:
+NP - Hard:
 
 3-COLORABILIDAD ∝ NÚMERO DOMÁTICO
 
-Se hará una reducción polinómica g de 3-COLORABILIDAD a DNP (Problema del Número Domático), conociendo que el problema 3-COLORABILIDAD es NP-completo demostrado anteriormente, con las siguientes propiedades, donde δ(G) es el número domático de G:
+Se hará una reducción polinómica g de 3-COLORABILIDAD a DNP (Problema del Número Domático), conociendo que el problema 3-COLORABILIDAD es NP-Hard(la demostración de que número cromático es NP-Hard se hace construyendo un grafo cuyo número cromático es exactamente 3 si y solo si existe una asignación de valores de verdad tal que se satisfaga la FNC que recibe 3-SAT. Ese grafo se garantiza que no es 2-coloreable porque se construye un triángulo entre los 3 nodos que representan a los colores: True, False, Base; luego si ese grafo es 3-coloreable podemos decir que se satisface la FNC, por lo tanto 3-coloreable también es NP-Hard), con las siguientes propiedades, donde δ(G) es el número domático de G:
 
 - Si G ∈ 3-COLORABILIDAD → δ(G) = 3
 - Si G ∉ 3-COLORABILIDAD → δ(G) = 2
@@ -211,7 +214,7 @@ El objetivo es determinar si existe un subconjunto de $T$ de tamaño $n$ (es dec
 
 > Determinar la dimensión bipartita de un grafo cualquiera.
 
-NP - Completo:
+NP - Hard:
 
 - Sea P₀ Clique Cover.
 - Sea P₁: Determinar el mínimo número de subgrafos bipartitos completos (CBS) de G que cubren un subconjunto específico H de aristas de G (donde G es bipartito).
@@ -221,7 +224,7 @@ P₀ ∝ P₁ (Clique Cover se reduce a Cubrimiento con CBS)
 
 Dado un grafo G con vértices v₁,...,vₙ, construimos G' con vértices x₁,...,xₙ y y₁,...,yₙ. Definimos las aristas de G' de manera que xᵢ → yᵢ para todo i de 1 a n, y si vᵢ → vⱼ en G, entonces xᵢ → yⱼ en G'. Sea H' el conjunto de aristas {(xᵢ,yᵢ) | i = 1,...,n}.
 
-Sea C' un subgrafo bipartito completo en G' que incluye las aristas (xⱼ₁,yⱼ₁),...,(xⱼₖ,yⱼₖ). Entonces en G, los vértices (vⱼ₁,...,vⱼₖ) forman necesariamente un clique. Esto es porque si dos vértices están en C', sus correspondientes vértices en G deben estar conectados por definición de nuestra construcción.
+Sea C' un subgrafo bipartito completo en G' que incluye las aristas (x₁,y₁),...,(xₖ,yₖ). Entonces en G, los vértices (v₁,...,vₖ) forman necesariamente un clique. Esto es porque si dos vértices están en C', sus correspondientes vértices en G deben estar conectados por definición de nuestra construcción.
 
 En la otra dirección, si C es un clique en G que incluye el vértice vᵢ, entonces podemos construir un subgrafo bipartito completo en G' que incluye la arista (xᵢ,yᵢ), tomando todos los vértices correspondientes al clique. Por tanto, el mínimo número de cliques necesarios para cubrir los vértices en G es igual al mínimo número de subgrafos bipartitos completos necesarios para cubrir las aristas de H' en G'.
 
@@ -233,7 +236,7 @@ Por la construcción realizada, cada arista (xᵢⱼ,yᵢⱼ) pertenece a un ún
 
 Como esta construcción se realiza para cada arista que no está en H, garantizamos que todas las aristas fuera de H quedan cubiertas por subgrafos bipartitos completos de manera única y necesaria. Por lo tanto, el número mínimo de subgrafos bipartitos completos necesarios para cubrir H es exactamente RB(G') - |H^c|, donde H^c son las aristas de G que no están en H.
 
-Esto completa la cadena de reducciones, demostrando que determinar la dimensión bipartita es NP-completo.
+Esto completa la cadena de reducciones, demostrando que determinar la dimensión bipartita es NP-Hard.
 
 ## Numero de Intersección
 > Sea $G=(V,E)$ un grafo no dirigido con $V$ como el conjunto de vértices y $E$ como el conjunto de aristas. El número de intersección de $G$, denotado como $int(G)$, es el mínimo entre las cardinalidades de una colección de conjuntos ${S_v​:v \in V}$, tal que:
@@ -251,7 +254,7 @@ MAX-2-SAT:
 Dado un conjunto de m cláusulas disyuntivas con a lo sumo 2 literales y un entero k, decir si existe una manera de asignar valores de verdad a las variables tal que se cumplan al menos k cláusulas.
 
 Máximo corte simple:
-> Sea $G=(V,E)$ un grafo con aristas ponderadas y W un entero. Un corte es una division de los vertices en dos conjuntos $T$ y $V-T$. El costo de un corte es la suma de los pesos de las aristas que van de $T$ a $V-T$. Se debe decir si existe un corte cuyo costo sea mayor o igual que W.
+> Sea $G=(V,E)$ un grafo con aristas ponderadas y W un entero. Un corte es una division de los vertices en dos conjuntos $T$ y $V-T$. El costo de un corte es la suma de los pesos de las aristas que van de $T$ a $V-T$. Todas las aristas tendrán peso = 1. Se debe decir si existe un corte cuyo costo sea mayor o igual que W.
 > 
 Primero demostraremos que 3-SAT se reduce a MAX-2-SAT, y luego que MAX-2-SAT se reduce a MÁXIMO CORTE Simple.
 
@@ -290,7 +293,7 @@ Dado un conjunto de p cláusulas (aᵢ ∨ bᵢ) y un entero k para MAX-2-SAT, c
 
 El problema del MÁXIMO CORTE simple se formula con el grafo G = (N, A₁ ∪ A₂) y W = |A₁| + 2k.
 
-Todas las aristas tendrán peso = 1.
+
 La construcción es correcta porque:
 1. Una asignación que satisface k o más cláusulas induce una partición con al menos |A₁| + 2k aristas cruzando el corte.
 2. Una partición con |A₁| + 2k o más aristas cruzando el corte induce una asignación que satisface al menos k cláusulas.
@@ -303,27 +306,12 @@ Como el problema de máximo corte consiste en hallar el corte con mayor costo, s
 Subgrafo Máximo Bipartito
 > El problema consiste en encontrar dado un grafo $G=(V,E)$ el subgrafo $G'=(V',E')$ con $V' \subseteq V$ y $E' \subseteq E$ de forma que $G'$ sea bipartito y $|E'|$ es máximo.
 
-NP-completo
+NP-Hard:
 
-Máximo Corte (ponderado) ∝ Máximo Corte (no ponderado)
+Máximo Corte simple ∝ Subgrafo Máximo Bipartito
 
-Sea una instancia del problema Máximo Corte ponderado que consiste en un grafo G = (V,E) con una función de pesos w: E → Z⁺ y un entero positivo k.
-
-Para cada arista e = {u,v} ∈ E con peso w(e), construimos un grafo G' = (V,E') donde:
-- Mantenemos el mismo conjunto de vértices V
-- Para cada arista e = {u,v} ∈ E, creamos exactamente w(e) aristas paralelas en E' entre los vértices u y v
-- El valor objetivo k permanece sin cambios
-
-Primero, supongamos que G' tiene un corte (V₁,V₂) que contiene al menos k aristas. Como cada arista en G' corresponde a una fracción unitaria del peso de una arista original en G, podemos usar la misma partición (V₁,V₂) en G. Por construcción, cada arista e = {u,v} que cruza el corte en G' contribuye con una unidad al peso total del corte en G. Como tenemos w(e) copias de cada arista original, la suma de los pesos de las aristas que cruzan el corte en G es igual al número de aristas que cruzan el corte en G', que es al menos k.
-
-En la otra dirección, si existe una partición (V₁,V₂) de V que produce un corte de peso al menos k en G, entonces la misma partición en G' producirá un corte que contiene al menos k aristas, ya que cada arista de peso w(e) en G se convirtió en w(e) aristas individuales en G' que cruzarán el corte de la misma manera.
-
-La transformación es claramente polinomial en el tamaño de la entrada, considerando que los pesos están codificados en binario y cada peso está acotado por 2^b donde b es el número de bits usados en la representación. El número total de aristas en G' es igual a la suma de los pesos de las aristas en G.
-
-Máximo Corte (no ponderado) ∝ Subgrafo Máximo Bipartito
-
-Sea una instancia de Máximo Corte no ponderado consistente en un grafo G = (V,E) y un entero k. La correspondiente instancia del problema del Máximo Subgrafo Bipartito utilizará el mismo grafo G.
+Sea una instancia de Máximo Corte simple consistente en un grafo G = (V,E) y un entero k. La correspondiente instancia del problema del Máximo Subgrafo Bipartito utilizará el mismo grafo G.
 
 Primero, supongamos que G' = (V',E') es un subgrafo bipartito de G con |E'| ≥ k. Como G' es bipartito, existe una bipartición (X,Y) de V' tal que cada arista en E' tiene un extremo en X y otro en Y. Esta bipartición puede extenderse a una partición (V₁,V₂) de todo V asignando los vértices en V-V' arbitrariamente: V₁ = X ∪ A y V₂ = Y ∪ B, donde A ∪ B = V-V' es cualquier partición del resto de vértices. Por construcción, todas las aristas en E' cruzan entre V₁ y V₂, lo que garantiza un corte de tamaño al menos k en G.
 
-En la otra dirección, si existe una partición (V₁,V₂) de V que produce un corte de tamaño al menos k en G, entonces podemos construir un subgrafo bipartito G' tomando V' = V y E' como el conjunto de todas las aristas que cruzan entre V₁ y V₂. Por definición, G' es bipartito con bipartición (V₁,V₂) y contiene al menos k aristas.
+En la otra dirección, si existe una partición (V₁,V₂) de V que produce un corte de costo al menos k en G, entonces podemos construir un subgrafo bipartito G' tomando V' = V y E' como el conjunto de todas las aristas que cruzan entre V₁ y V₂. Por definición, G' es bipartito con bipartición (V₁,V₂) y contiene al menos k aristas.
