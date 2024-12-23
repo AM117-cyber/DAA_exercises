@@ -212,11 +212,10 @@ Luego para saber si existe un vertex cover de tamaño k en G, realizo la transfo
 ## 3D Matching
 > El problema se basa en encontrar un emparejamiento dentro de un conjunto tridimensional.
 
-Supongamos que tienes tres conjuntos disjuntos: $X$, $Y$, y $Z$, cada uno de tamaño $n$. También tienes un conjunto $T$ de ternas de la forma $(x,y,z)$, donde $x \in X$, $y \in Y$, y $z \in Z$.
+> Supongamos que tienes tres conjuntos disjuntos: $X$, $Y$, y $Z$, cada uno de tamaño $n$. También tienes un conjunto $T$ de ternas de la forma $(x,y,z)$, donde $x \in X$, $y \in Y$, y $z \in Z$.
 
-El objetivo es determinar si existe un subconjunto de $T$ de tamaño $n$ (es decir, nn ternas) tal que cada elemento de $X$, $Y$, y $Z$ aparezca exactamente una vez en las ternas seleccionadas.
+> El objetivo es determinar si existe un subconjunto de $T$ de tamaño $n$ (es decir, nn ternas) tal que cada elemento de $X$, $Y$, y $Z$ aparezca exactamente una vez en las ternas seleccionadas.
 
-Es polinomial porque cada vértice y arista del grafo original se mapea de forma directa y lineal a los conjuntos (X), (Y), (Z) y las ternas en (T). Para cada arista (\langle u, v \rangle) en (G), se crea una terna ((u, v, z)) en (T), donde (z) es un elemento único asociado. Este proceso implica recorrer todas las aristas una sola vez y generar un número de ternas proporcional al número de aristas, lo que asegura que la reducción crece linealmente con el tamaño de la entrada original.
 ## Dimensión Bipartita
 > Para un grafo $G=(V,E)$, la dimensión bipartita $rb(G)$ es el mínimo número de subgrafos bipartitos completos (permitiendo repetición de aristas) cuya unión incluye todas las aristas de G.
 
