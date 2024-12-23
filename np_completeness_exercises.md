@@ -24,6 +24,8 @@ Dado un grafo G = (V,E) vamos a crear un conjunto X tal que por cada nodo $v \in
 Luego vamos a construir S tal que por cada nodo $v \in V$ se añaden Svr, Svg y Svb a S tal que $v \in Svg, Svr, Svb$ y por cada arista <v,u> en E, $Rvu \in Svr$, $Gvu \in Svg$ y $Bvu \in Svb$. Luego por cada arista $<v,u> \in E$ añadimos a S conjuntos unitarios con los elementos Rvu, Gvu y Bvu. Por la forma en que construimos X y S, si existe un exact cover entonces el grafo es 3 coloreable porque para que v esté en S' es necesario escoger Svg, Svr o Svb, lo cual representa asociarle ese color a v porque para añadir a S' algún nodo u que tenga una arista en común con v, hay que añadir Sug, Sur o Sub.
 Para ver que determinar si un grafo tiene como número cromático 3 es np-hard leer la demostración de número cromático.
 
+La construcción del conjunto X y la colección S se basa en añadir, para cada vértice y cada arista del grafo original, un número constante de elementos y conjuntos. Así, si |V| es el número de vértices y |E| el número de aristas, la creación de X y S se realiza en O(|V| + |E|) (cada vértice y arista del grafo produce un conjunto finito de elementos y subconjuntos). Por lo tanto, el tamaño total de la instancia resultante y el tiempo para construirla crecen polinomialmente respecto al tamaño de G.
+
 NP:
 Dado un conjunto S' se puede pasar por cada uno de sus elementos marcando los elementos de X que se han encontrado para garantizar que se pasa por todos una única vez en tiempo polinomial.
 
@@ -36,6 +38,8 @@ Demostración de que clique es NP-Hard:
 clique <= clique máximo
 Si tengo el clique de mayor tamaño del grafo, entonces puedo saber en tiempo polinomial cuál es ese tamaño, al que llamaremos h. Si h es mayor o igual que k, entonces escogemos un subconjunto de vértices del clique(de tamaño k) y tenemos un clique de ese tamaño. Si h < k,entonces no existe un clique de tamaño k porque de existir ese sería el mayor clique, contradicción.
 
+La reducción desde el problema de reconocimiento de cliques (decidir si existe un clique de tamaño al menos k) al problema de encontrar el clique máximo aprovecha la salida de la versión de optimización. Una vez construido el grafo original, el algoritmo que halla el clique máximo se ejecuta en un tiempo polinomial adicional para verificar si el tamaño del clique es al menos k. Esta verificación (comparación y selección de vértices) se realiza en un tiempo lineal o polinomial respecto al número de vértices, por lo que la transformación está acotada polinomialmente.
+
 Por qué no puedo decir que es NP?
 Por ser un problema de optimización.
 
@@ -47,6 +51,8 @@ El objetivo del problema de cobertura de cliques es encontrar el número mínimo
 NP- Hard:
 número cromático <= cobertura de cliques
 Sea G = (V,E) y G' su grafo complemento y sea k el número cromático de G; el número mínimo de cliques necesarios para cubrir todos los vértices del grafo G' que es k. En una k-coloración de de G los vértices de un mismo color no tienen ninguna arista entre sí, por lo que en G' formarán un clique. Luego en G' hay k cliques ${C_1,C_2,…,C_k}$ que cumplen que cada vértice $v' \in V'$ pertenece a al menos uno de estos cliques. Si en G' existiera un clique cover de tamaño h menor que k, cada uno de estos cliques formaría un conjunto independiente en G, por lo que coloreando del mismo color los vértices que pertenecen al mismo conjunto independiente se llega a una coloración válida con h colores, por lo que el número cromático de G no sería k, contradicción. Por lo tanto, el menor clique cover de G' es de tamaño k.
+
+La construcción del grafo complemento G' se realiza en tiempo polinómico con respecto a |V| y |E| (señalar la no-arista como arista y viceversa). Posteriormente, la relación entre k-coloraciones en G y la cobertura de cliques en G' se establece mediante una equivalencia simple: cada color en G se traduce en un clique en G'. Todos estos pasos (construir G', verificar sus cliques y reducir al número cromático) implican operaciones polinómicas en el tamaño del grafo original.
 
 ## Numero Cromático
 > El número cromático de un grafo es el número mínimo de colores necesarios para colorear los vértices del grafo de manera que dos vértices adyacentes no compartan el mismo color.
@@ -63,7 +69,7 @@ El grafo representado en la figura anterior garantiza que el nodo superior (nodo
 
 Por lo tanto, para saber si la instancia de 3-SAT es satisfacible se puede crear el grafo G y hallar su número cromático. Si este es 3 entonces asignándole el valor true a las variables que corresponden a los nodos que tienen el color True se obtiene una asignación que garantiza que por cada cláusula haya al menos una variable true, lo que hace que la FNC de true. Por otra parte, si tenemos una asignación que satisface la FNC entonces coloreando los nodos que corresponden a cada variable con su valor de verdad se encuentra una manera de colorear el grafo con 3 colores por la manera en que construimos el grafo.
 
-Es polinomial porque a la hora de crear el grafo, por cada cláusula se va a crear el subgrafo en tiempo constante... Explicar mejor... :)
+Es polinomial porque durante el proceso de construccion para cada variable xi se añaden un número fijo de vértices y aristas (construyendo el subgrafo que conecta xi, !xi y Base), para cada cláusula Cj, se conecta un conjunto fijo de nuevos vértices según la estructura mostrada en la figura (nodo A y la interacción con las variables incluidas en la cláusula). Además, el número de cláusulas y el número de variables determinan cuántos subgrafos se añaden, y las conexiones se realizan en un número constante de pasos por cada variable y cláusula. Dado que el tamaño del grafo crece de manera lineal o polinómica con respecto a n (variables) y k (cláusulas), la transformación de la instancia de 3-SAT en el grafo G se efectúa en tiempo polinomial.
 
 
 ## Conjunto Dominante
@@ -180,6 +186,7 @@ Como k >= h y  k <= h entonces k = h.
 
 Luego, al obtener el tamaño del menor conjunto de retroalimentación de G'tenemos el tamaño del menor vertex cover en G. Por lo tanto, para saber si el grafo G tiene vertex cover de tamaño k obtenemos el tamaño del menor conjunto de retroalimentación, si es menor o igual que k entonces se devuelve True, en caso contrario se devuelve False.
 
+Es polinomial porque para cada vértice en (G) se agregan exactamente dos vértices en (G') y un arco entre ellos (con índice 0 y 1). Para cada arista en (G), se agregan solo dos arcos adicionales en (G'). El tamaño de (G') y el número de arcos crecen, por tanto, de forma lineal respecto a (|V|) y (|E|). Verificar y construir la correspondencia (vertex cover ↔ retroalimentación de vértices) no requiere más que iterar sobre vértices y aristas del grafo original.
 ## Retroalimentación de Arcos
 >Dado un grafo $G=(V,E)$, un conjunto de retroalimentación de arcos es un subconjunto de arcos $F \subseteq E$ tal que al eliminar todos los arcos en $F$, el grafo resultante no contiene ciclos (es un grafo acíclico o un bosque, si es no dirigido).
 
@@ -190,6 +197,7 @@ vertex cover <= retroalimentación de arcos
 
 La entrada del problema de Cobertura de Vértices es un grafo no dirigido \( G = (V, E) \). Dado \( G = (V, E) \), creamos un grafo dirigido \( G' = (V', E') \) tal que por cada vértice v que pertenece a V, v y v' pertenecen a V' y E'= {(𝑣,𝑣′),(𝑣′,𝑢),(𝑢′,𝑣)∣⟨𝑢,𝑣⟩∈𝐸}.
 
+Es polinomial porque para cada vértice (v\in V), se añaden en (G') exactamente dos nodos ((v) y (v')), así como un arco ((v,v')). Para cada arista (\langle u,v\rangle \in E), se añaden las aristas ((v',u)) y ((u',v)) en (G'). El tamaño del nuevo grafo (G') es proporcional a la suma de vértices y arcos del grafo original (G). La correspondencia entre “arcos de retroalimentación en (G')” y “conjunto vertex cover en (G)” se define mediante reglas directas (vértices vs. arcos derivados), lo cual implica que tanto la construcción como la verificación se llevan a cabo en tiempo acotado por un polinomio de (|V| + |E|).
 ## Correctitud
 Existe una cobertura de vértices en \( G \) de tamaño \( k \) si y solo si existe un conjunto de retroalimentación de arcos en \( G' \) de tamaño \( k \).
 
@@ -209,6 +217,7 @@ Supongamos que tienes tres conjuntos disjuntos: $X$, $Y$, y $Z$, cada uno de tam
 
 El objetivo es determinar si existe un subconjunto de $T$ de tamaño $n$ (es decir, nn ternas) tal que cada elemento de $X$, $Y$, y $Z$ aparezca exactamente una vez en las ternas seleccionadas.
 
+Es polinomial porque cada vértice y arista del grafo original se mapea de forma directa y lineal a los conjuntos (X), (Y), (Z) y las ternas en (T). Para cada arista (\langle u, v \rangle) en (G), se crea una terna ((u, v, z)) en (T), donde (z) es un elemento único asociado. Este proceso implica recorrer todas las aristas una sola vez y generar un número de ternas proporcional al número de aristas, lo que asegura que la reducción crece linealmente con el tamaño de la entrada original.
 ## Dimensión Bipartita
 > Para un grafo $G=(V,E)$, la dimensión bipartita $rb(G)$ es el mínimo número de subgrafos bipartitos completos (permitiendo repetición de aristas) cuya unión incluye todas las aristas de G.
 
@@ -255,7 +264,7 @@ Dado un conjunto de m cláusulas disyuntivas con a lo sumo 2 literales y un ente
 
 Máximo corte simple:
 > Sea $G=(V,E)$ un grafo con aristas ponderadas y W un entero. Un corte es una division de los vertices en dos conjuntos $T$ y $V-T$. El costo de un corte es la suma de los pesos de las aristas que van de $T$ a $V-T$. Todas las aristas tendrán peso = 1. Se debe decir si existe un corte cuyo costo sea mayor o igual que W.
-> 
+>
 Primero demostraremos que 3-SAT se reduce a MAX-2-SAT, y luego que MAX-2-SAT se reduce a MÁXIMO CORTE Simple.
 
 3-SAT ∝ MAX-2-SAT
@@ -299,7 +308,7 @@ La construcción es correcta porque:
 2. Una partición con |A₁| + 2k o más aristas cruzando el corte induce una asignación que satisface al menos k cláusulas.
 3. La estructura de A₁ fuerza una correspondencia entre particiones válidas y asignaciones de verdad consistentes.
 
-Luego determinando si existe un máximo corte simple con costo mayor o igual que W se determina si se pueden asignar valores de verdad a las cláusulas que recibió MAX-2-SAT como entrada tal que den True al menos k. 
+Luego determinando si existe un máximo corte simple con costo mayor o igual que W se determina si se pueden asignar valores de verdad a las cláusulas que recibió MAX-2-SAT como entrada tal que den True al menos k.
 
 Como el problema de máximo corte consiste en hallar el corte con mayor costo, si el costo es menor que W podemos devolver False en el problema de decisión (máximo corte simple), en otro caso devolvemos True. Luego máximo corte es NP-Hard.
 
