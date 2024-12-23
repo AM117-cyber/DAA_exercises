@@ -50,8 +50,6 @@ NP- Hard:
 número cromático ∝ cobertura de cliques
 Sea G = (V,E) y G' su grafo complemento y sea k el número cromático de G; el número mínimo de cliques necesarios para cubrir todos los vértices del grafo G' que es k. En una k-coloración de de G los vértices de un mismo color no tienen ninguna arista entre sí, por lo que en G' formarán un clique. Luego en G' hay k cliques ${C_1,C_2,…,C_k}$ que cumplen que cada vértice $v' \in V'$ pertenece a al menos uno de estos cliques. Si en G' existiera un clique cover de tamaño h menor que k, cada uno de estos cliques formaría un conjunto independiente en G, por lo que coloreando del mismo color los vértices que pertenecen al mismo conjunto independiente se llega a una coloración válida con h colores, por lo que el número cromático de G no sería k, contradicción. Por lo tanto, el menor clique cover de G' es de tamaño k.
 
-La construcción del grafo complemento G' se realiza en tiempo polinómico con respecto a |V| y |E| (señalar la no-arista como arista y viceversa). Posteriormente, la relación entre k-coloraciones en G y la cobertura de cliques en G' se establece mediante una equivalencia simple: cada color en G se traduce en un clique en G'. Todos estos pasos (construir G', verificar sus cliques y reducir al número cromático) implican operaciones polinómicas en el tamaño del grafo original.
-
 ## Numero Cromático
 > El número cromático de un grafo es el número mínimo de colores necesarios para colorear los vértices del grafo de manera que dos vértices adyacentes no compartan el mismo color.
 
