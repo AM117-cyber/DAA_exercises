@@ -249,13 +249,19 @@ Esto completa la cadena de reducciones, demostrando que determinar la dimensión
 Máximo Corte
 > Sea $G=(V,E)$ un grafo con aristas ponderadas. Un corte es una division de los vertices en dos conjuntos $T$ y $V-T$. El costo de un corte es la suma de los pesos de las aristas que van de $T$ a $V-T$. El problema trata de encontrar el corte de mayor costo de un grafo.
 
-NP-completo
+NP-Hard:
 
-Primero demostraremos que 3-SAT se reduce a MAX-2-SAT, y luego que MAX-2-SAT se reduce a MÁXIMO CORTE.
+MAX-2-SAT:
+Dado un conjunto de m cláusulas disyuntivas con a lo sumo 2 literales y un entero k, decir si existe una manera de asignar valores de verdad a las variables tal que se cumplan al menos k cláusulas.
+
+Máximo corte simple:
+> Sea $G=(V,E)$ un grafo con aristas ponderadas y W un entero. Un corte es una division de los vertices en dos conjuntos $T$ y $V-T$. El costo de un corte es la suma de los pesos de las aristas que van de $T$ a $V-T$. Se debe decir si existe un corte cuyo costo sea mayor o igual que W.
+> 
+Primero demostraremos que 3-SAT se reduce a MAX-2-SAT, y luego que MAX-2-SAT se reduce a MÁXIMO CORTE Simple.
 
 3-SAT ∝ MAX-2-SAT
 
-Sea S un conjunto de cláusulas disyuntivas, cada una con exactamente 3 literales (podemos asumir esto sin pérdida de generalidad repitiendo literales si es necesario). Etiquetamos las cláusulas como (aᵢ ∨ bᵢ ∨ cᵢ), donde i va de 1 a m, y cada aᵢ, bᵢ, y cᵢ representa una variable o su negación.
+Sea S un conjunto de m cláusulas disyuntivas, cada una con a los sumo 3 literales (podemos asumir que tienen exactamente 3 literales sin pérdida de generalidad repitiendo literales si es necesario). Etiquetamos las cláusulas como (aᵢ ∨ bᵢ ∨ cᵢ), donde i va de 1 a m, y cada aᵢ, bᵢ, y cᵢ representa una variable o su negación.
 
 Para cada cláusula i, construimos el siguiente conjunto de cláusulas S' con dos literales máximo:
 - Cláusulas unitarias: (aᵢ), (bᵢ), (cᵢ), (dᵢ)
@@ -268,7 +274,7 @@ La construcción es correcta porque:
 2. Si S no es satisfacible, entonces a lo sumo 6 cláusulas de cada grupo pueden ser satisfechas.
 3. Por lo tanto, S' tiene una asignación que satisface 7m o más cláusulas si y solo si S es satisfacible.
 
-MAX-2-SAT ∝ MÁXIMO CORTE
+MAX-2-SAT ∝ MÁXIMO CORTE simple
 
 Dado un conjunto de p cláusulas (aᵢ ∨ bᵢ) y un entero k para MAX-2-SAT, construimos un grafo G de la siguiente manera:
 
@@ -286,14 +292,17 @@ Dado un conjunto de p cláusulas (aᵢ ∨ bᵢ) y un entero k para MAX-2-SAT, c
    - {aᵢ,bᵢ} para cada cláusula i donde aᵢ ≠ bᵢ
    - {aᵢ,F₂ᵢ₋₁} y {bᵢ,F₂ᵢ} para cada cláusula i
 
-El problema del MÁXIMO CORTE se formula con el grafo G = (N, A₁ ∪ A₂) y W = |A₁| + 2k.
+El problema del MÁXIMO CORTE simple se formula con el grafo G = (N, A₁ ∪ A₂) y W = |A₁| + 2k.
 
+Todas las aristas tendrán peso = 1.
 La construcción es correcta porque:
 1. Una asignación que satisface k o más cláusulas induce una partición con al menos |A₁| + 2k aristas cruzando el corte.
 2. Una partición con |A₁| + 2k o más aristas cruzando el corte induce una asignación que satisface al menos k cláusulas.
 3. La estructura de A₁ fuerza una correspondencia entre particiones válidas y asignaciones de verdad consistentes.
 
-Por lo tanto, hemos demostrado que el problema del MÁXIMO CORTE es NP-completo.
+Luego determinando si existe un máximo corte simple con costo mayor o igual que W se determina si se pueden asignar valores de verdad a las cláusulas que recibió MAX-2-SAT como entrada tal que den True al menos k. 
+
+Como el problema de máximo corte consiste en hallar el corte con mayor costo, si el costo es menor que W podemos devolver False en el problema de decisión (máximo corte simple), en otro caso devolvemos True. Luego máximo corte es NP-Hard.
 
 Subgrafo Máximo Bipartito
 > El problema consiste en encontrar dado un grafo $G=(V,E)$ el subgrafo $G'=(V',E')$ con $V' \subseteq V$ y $E' \subseteq E$ de forma que $G'$ sea bipartito y $|E'|$ es máximo.
