@@ -18,7 +18,7 @@ Demuestre que los siguientes problemas son NP-Hard o NP-Completos, según corres
 
 NP- HARD:
 
-número cromático es 3 <= set cover(exact cover):
+número cromático es 3 ∝ set cover(exact cover):
 
 Dado un grafo G = (V,E) vamos a crear un conjunto X tal que por cada nodo $v \in V$ se añade a X: v, Rv,Gv y Bv. Por cada arista $<u,v> \in E$ se añade a X: Ruv, Guv y Buv.
 Luego vamos a construir S tal que por cada nodo $v \in V$ se añaden Svr, Svg y Svb a S tal que $v \in Svg, Svr, Svb$ y por cada arista <v,u> en E, $Rvu \in Svr$, $Gvu \in Svg$ y $Bvu \in Svb$. Luego por cada arista $<v,u> \in E$ añadimos a S conjuntos unitarios con los elementos Rvu, Gvu y Bvu. Por la forma en que construimos X y S, si existe un exact cover entonces el grafo es 3 coloreable porque para que v esté en S' es necesario escoger Svg, Svr o Svb, lo cual representa asociarle ese color a v porque para añadir a S' algún nodo u que tenga una arista en común con v, hay que añadir Sug, Sur o Sub.
@@ -35,13 +35,11 @@ Dado un conjunto S' se puede pasar por cada uno de sus elementos marcando los el
 ## Hallar el clique de mayor tamaño en un grafo.
 
 Demostración de que clique es NP-Hard:
-clique <= clique máximo
+clique ∝ clique máximo
 Si tengo el clique de mayor tamaño del grafo, entonces puedo saber en tiempo polinomial cuál es ese tamaño, al que llamaremos h. Si h es mayor o igual que k, entonces escogemos un subconjunto de vértices del clique(de tamaño k) y tenemos un clique de ese tamaño. Si h < k,entonces no existe un clique de tamaño k porque de existir ese sería el mayor clique, contradicción.
 
 La reducción desde el problema de reconocimiento de cliques (decidir si existe un clique de tamaño al menos k) al problema de encontrar el clique máximo aprovecha la salida de la versión de optimización. Una vez construido el grafo original, el algoritmo que halla el clique máximo se ejecuta en un tiempo polinomial adicional para verificar si el tamaño del clique es al menos k. Esta verificación (comparación y selección de vértices) se realiza en un tiempo lineal o polinomial respecto al número de vértices, por lo que la transformación está acotada polinomialmente.
 
-Por qué no puedo decir que es NP?
-Por ser un problema de optimización.
 
 ## Cobertura de Clique
 > Dado un grafo $G=(V,E)$, una cobertura de cliques es un conjunto de cliques ${C_1,C_2,…,C_k}$ tal que cada vértice $v \in V$ pertenece a al menos uno de estos cliques.
@@ -49,7 +47,7 @@ Por ser un problema de optimización.
 El objetivo del problema de cobertura de cliques es encontrar el número mínimo de cliques necesarios para cubrir todos los vértices del grafo.
 
 NP- Hard:
-número cromático <= cobertura de cliques
+número cromático ∝ cobertura de cliques
 Sea G = (V,E) y G' su grafo complemento y sea k el número cromático de G; el número mínimo de cliques necesarios para cubrir todos los vértices del grafo G' que es k. En una k-coloración de de G los vértices de un mismo color no tienen ninguna arista entre sí, por lo que en G' formarán un clique. Luego en G' hay k cliques ${C_1,C_2,…,C_k}$ que cumplen que cada vértice $v' \in V'$ pertenece a al menos uno de estos cliques. Si en G' existiera un clique cover de tamaño h menor que k, cada uno de estos cliques formaría un conjunto independiente en G, por lo que coloreando del mismo color los vértices que pertenecen al mismo conjunto independiente se llega a una coloración válida con h colores, por lo que el número cromático de G no sería k, contradicción. Por lo tanto, el menor clique cover de G' es de tamaño k.
 
 La construcción del grafo complemento G' se realiza en tiempo polinómico con respecto a |V| y |E| (señalar la no-arista como arista y viceversa). Posteriormente, la relación entre k-coloraciones en G y la cobertura de cliques en G' se establece mediante una equivalencia simple: cada color en G se traduce en un clique en G'. Todos estos pasos (construir G', verificar sus cliques y reducir al número cromático) implican operaciones polinómicas en el tamaño del grafo original.
@@ -60,7 +58,7 @@ La construcción del grafo complemento G' se realiza en tiempo polinómico con r
 ## Hallar el número cromático en un grafo.
 
 NP-hard:
-3-SAT <= número cromático
+3-SAT ∝ número cromático
 Sean x1, . . . , xn las variables de una instancia de 3-SAT y C1, . . . , Ck sus cláusulas, vamos a construir un grafo G = (V,E) que cumpla que es 3-coloreable si y solo si la instancia de 3-SAT es satisfacible. Para ello a partir de un grafo vacío le añadiremos 3 nodos con aristas entre ellos formando un triángulo, lo que garantiza que cuando se vayan a colorear cada uno reciba un color distinto. Llamaremos a estos nodos True, False y Base y nos referiremos al color que se le asocie a cada uno de la misma manera, por lo que si a un nodo del grafo le corresponde el mismo color que el nodo True, decimos que ese nodo tiene color True. Ahora, por cada variable xi con $i \in [1,n]$ se crean los nodos vi y !vi y se forma un triángulo con ellos y el nodo Base. De esta manera se garantiza que al colorear los nodos correspondientes a una variable no se le pueda asociar el color Base, pero sí True o False y que una variable y su negación nunca tengan el mismo color. Hasta este punto el grafo siempre será 3-coloreable, por lo que necesitamos añadir algo que represente a cada cláusula del 3-SAT y que fuerce al grafo a necesitar más de 3 colores para colorearse en caso de que alguna cláusula no se pueda satisfacer.
 
 ![graph_1](graph_1.png)
@@ -170,7 +168,7 @@ El objetivo del problema es encontrar el conjunto de retroalimentación de vért
 
 NP- Hard:
 
-vertex cover <= retroalimentación de vértices:
+vertex cover ∝ retroalimentación de vértices:
 
 Sea $G=(V,E)$ un grafo, crearemos un grafo G' dirigido tal que para todo $v \in V$ se añaden 2 nodos: v0 y v1 con un arco de v0 a v1. Luego por cada arista $<u,v> \in E$ vamos a añadir en G' un arco de u1 a v0 y de v1 a u0. De esta manera cada arista en G va a estar representada en el grafo G' por un ciclo que solo contiene a los 4 vértices que corresponden a los vértices que toca esa arista en G.
 tamaño del min vertex cover = k
@@ -187,13 +185,14 @@ Como k >= h y  k <= h entonces k = h.
 Luego, al obtener el tamaño del menor conjunto de retroalimentación de G'tenemos el tamaño del menor vertex cover en G. Por lo tanto, para saber si el grafo G tiene vertex cover de tamaño k obtenemos el tamaño del menor conjunto de retroalimentación, si es menor o igual que k entonces se devuelve True, en caso contrario se devuelve False.
 
 Es polinomial porque para cada vértice en (G) se agregan exactamente dos vértices en (G') y un arco entre ellos (con índice 0 y 1). Para cada arista en (G), se agregan solo dos arcos adicionales en (G'). El tamaño de (G') y el número de arcos crecen, por tanto, de forma lineal respecto a (|V|) y (|E|). Verificar y construir la correspondencia (vertex cover ↔ retroalimentación de vértices) no requiere más que iterar sobre vértices y aristas del grafo original.
+
 ## Retroalimentación de Arcos
 >Dado un grafo $G=(V,E)$, un conjunto de retroalimentación de arcos es un subconjunto de arcos $F \subseteq E$ tal que al eliminar todos los arcos en $F$, el grafo resultante no contiene ciclos (es un grafo acíclico o un bosque, si es no dirigido).
 
 >El objetivo del problema es encontrar el conjunto de retroalimentación de arcos de tamaño mínimo.
 
 NP-Hard:
-vertex cover <= retroalimentación de arcos
+vertex cover ∝ retroalimentación de arcos
 
 La entrada del problema de Cobertura de Vértices es un grafo no dirigido \( G = (V, E) \). Dado \( G = (V, E) \), creamos un grafo dirigido \( G' = (V', E') \) tal que por cada vértice v que pertenece a V, v y v' pertenecen a V' y E'= {(𝑣,𝑣′),(𝑣′,𝑢),(𝑢′,𝑣)∣⟨𝑢,𝑣⟩∈𝐸}.
 
@@ -254,7 +253,7 @@ Esto completa la cadena de reducciones, demostrando que determinar la dimensión
 > Existe una arista $(u,v) \in E$ si y solo si $S_u \cap S_v \neq \emptyset$.
 > En otras palabras, el número de intersección mide cuántos conjuntos son necesarios para representar todas las relaciones (aristas) entre los vértices mediante intersecciones de conjuntos.
 
-Máximo Corte
+## Máximo Corte
 > Sea $G=(V,E)$ un grafo con aristas ponderadas. Un corte es una division de los vertices en dos conjuntos $T$ y $V-T$. El costo de un corte es la suma de los pesos de las aristas que van de $T$ a $V-T$. El problema trata de encontrar el corte de mayor costo de un grafo.
 
 NP-Hard:
@@ -312,7 +311,7 @@ Luego determinando si existe un máximo corte simple con costo mayor o igual que
 
 Como el problema de máximo corte consiste en hallar el corte con mayor costo, si el costo es menor que W podemos devolver False en el problema de decisión (máximo corte simple), en otro caso devolvemos True. Luego máximo corte es NP-Hard.
 
-Subgrafo Máximo Bipartito
+## Subgrafo Máximo Bipartito
 > El problema consiste en encontrar dado un grafo $G=(V,E)$ el subgrafo $G'=(V',E')$ con $V' \subseteq V$ y $E' \subseteq E$ de forma que $G'$ sea bipartito y $|E'|$ es máximo.
 
 NP-Hard:
