@@ -216,6 +216,30 @@ Luego para saber si existe un vertex cover de tamaño k en G, realizo la transfo
 
 > El objetivo es determinar si existe un subconjunto de $T$ de tamaño $n$ (es decir, nn ternas) tal que cada elemento de $X$, $Y$, y $Z$ aparezca exactamente una vez en las ternas seleccionadas.
 
+### Demostración
+
+Para demostrar formalmente que el problema del emparejamiento tridimensional (3D Matching) es NP-completo, necesitamos demostrar dos cosas: 
+
+1. **El problema está en NP**: Dada una solución candidata (un subconjunto de \(T\) de tamaño \(n\)), podemos verificar en tiempo polinomial si es válida. Es decir, podemos comprobar si cada elemento de \(X\), \(Y\), y \(Z\) aparece exactamente una vez en las ternas seleccionadas.
+
+2. **NP-difícil mediante reducción desde 3-SAT**: Podemos demostrar que 3-D Matching es NP-completo mediante una reducción desde el problema 3-SAT, que es un problema conocido por ser NP-completo.
+
+**Reducción de 3-SAT a 3-D Matching:**
+
+1. **Instancia de 3-SAT**: Consideremos una fórmula booleana en forma normal conjuntiva, donde cada cláusula tiene exactamente tres literales. 
+
+2. **Traducción a 3-D Matching**:
+   - Para cada variable de la fórmula 3-SAT, creemos elementos correspondientes en cada uno de los conjuntos \(X\), \(Y\), y \(Z\).
+   - Para cada cláusula, se crean ternas que representan las combinaciones de literales que pueden satisfacer esa cláusula.
+   - Las ternas están diseñadas de tal manera que seleccionar un conjunto de ellas que cubra todos los elementos equivale a encontrar una asignación de verdad que satisfaga la fórmula original.
+
+3. **Correspondencia**: Una solución válida para el problema 3-D Matching corresponderá a una asignación satisfactoria de valores de verdad para las variables de la fórmula 3-SAT.
+
+Mediante esta reducción, demostramos que si podemos resolver el problema de 3-D Matching, entonces podemos resolver 3-SAT, lo que confirma que 3-D Matching es al menos tan difícil como 3-SAT. 
+
+Por lo tanto, dado que 3-D Matching está en NP y hemos demostrado que es NP-Hard, concluimos que es NP-completo.
+
+
 ## Dimensión Bipartita
 > Para un grafo $G=(V,E)$, la dimensión bipartita $rb(G)$ es el mínimo número de subgrafos bipartitos completos (permitiendo repetición de aristas) cuya unión incluye todas las aristas de G.
 
